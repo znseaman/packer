@@ -36,6 +36,28 @@ function App() {
     setItems(updatedItems);
   };
 
+  const onUnpackAll = () => {
+    let unpackedItems = items.map(i => {
+      i.packed = false;
+      return i;
+    });
+
+    setItems(unpackedItems);
+  };
+
+  const onPackAll = () => {
+    let unpackedItems = items.map(i => {
+      i.packed = true;
+      return i;
+    });
+
+    setItems(unpackedItems);
+  };
+
+  const onRemoveAll = () => {
+    setItems([]);
+  };
+
   return (
     <div className="App">
       <NewItem addNewItem={addNewItem}></NewItem>
@@ -51,6 +73,13 @@ function App() {
         onCheck={onCheck}
         onRemove={onRemove}
       ></Items>
+      {items.filter(item => item.packed).length > 0 && (
+        <button onClick={onUnpackAll}>Unpack All</button>
+      )}
+      {items.filter(item => !item.packed).length > 0 && (
+        <button onClick={onPackAll}>Pack All</button>
+      )}
+      {items.length > 1 && <button onClick={onRemoveAll}>Remove All</button>}
     </div>
   );
 }
