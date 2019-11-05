@@ -1,11 +1,18 @@
 import React from "react";
 
-const Filter = ({ searchText, onChange }) => {
-  const handleChange = e => {
-    onChange(e.target.value);
-  };
-
-  return <input type="text" value={searchText} onChange={handleChange} />;
+const Filter = ({ name, id, value, onChange }) => {
+  return (
+    <label htmlFor={id}>
+      {name}
+      <input
+        type="text"
+        name={id}
+        id={id}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+      />
+    </label>
+  );
 };
 
 export default Filter;

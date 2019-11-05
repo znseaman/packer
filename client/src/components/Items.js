@@ -15,7 +15,14 @@ const Items = ({ title, items, onCheck, onRemove }) => {
       <h2>
         {title} ({items.length})
       </h2>
-      <Filter searchText={searchText} onChange={setSearchText} />
+      {items.length > 0 && (
+        <Filter
+          name="Find: "
+          id={title}
+          searchText={searchText}
+          onChange={setSearchText}
+        />
+      )}
       {items.filter(bySearchText).map(item => (
         <Item key={item.id} item={item} onCheck={onCheck} onRemove={onRemove} />
       ))}
