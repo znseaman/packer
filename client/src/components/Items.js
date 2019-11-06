@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Item from "./Item";
 import Filter from "./Filter";
 
-const Items = ({ title, items, onCheck, onRemove }) => {
+const Items = ({ title, items, children }) => {
   const [searchText, setSearchText] = useState("");
 
   const bySearchText = item => {
@@ -10,21 +10,18 @@ const Items = ({ title, items, onCheck, onRemove }) => {
     return regex.test(item.value);
   };
 
+  const childrenWithProps = React.Children.map(children, child =>
+    React.cloneElement(child, { onChange: setSearchText })
+  );
+
   return (
     <section>
       <h2>
         {title} ({items.length})
       </h2>
-      {items.length > 0 && (
-        <Filter
-          name="Find: "
-          id={title}
-          searchText={searchText}
-          onChange={setSearchText}
-        />
-      )}
+      {childrenWithProps}
       {items.filter(bySearchText).map(item => (
-        <Item key={item.id} item={item} onCheck={onCheck} onRemove={onRemove} />
+        <Item key={item.id} item={item} />
       ))}
     </section>
   );

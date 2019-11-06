@@ -1,7 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import uniqueId from "lodash/uniqueId";
 
-const NewItem = ({ addNewItem }) => {
+import ItemsContext from "../context";
+
+const NewItem = () => {
   const [value, setValue] = useState("");
+  const { items, setItems } = useContext(ItemsContext);
+
+  const addNewItem = value => {
+    const item = {
+      value,
+      packed: false,
+      id: uniqueId()
+    };
+
+    setItems([item, ...items]);
+  };
 
   const onSubmit = e => {
     e.preventDefault();

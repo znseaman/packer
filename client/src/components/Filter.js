@@ -1,6 +1,6 @@
 import React from "react";
 
-const Filter = ({ name, id, value, onChange }) => {
+const Filter = ({ name = "Find: ", id, value, onChange }) => {
   return (
     <label htmlFor={id}>
       {name}

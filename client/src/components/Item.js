@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
+import ItemsContext from "../context";
 
-const Item = ({ item, onCheck, onRemove }) => {
+const Item = ({ item }) => {
+  const { items, setItems } = useContext(ItemsContext);
+
+  const onCheck = item => {
+    let newItems = items.map(i => {
+      if (i.id === item.id) {
+        i.packed = !item.packed;
+      }
+      return i;
+    });
+
+    setItems(newItems);
+  };
+
+  const onRemove = id => {
+    let updatedItems = items.filter(i => i.id !== id);
+
+    setItems(updatedItems);
+  };
+
   const { id, value, packed } = item;
   return (
     <article>
