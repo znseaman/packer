@@ -6,8 +6,6 @@ import Items from "./components/Items";
 import NewItem from "./components/NewItem";
 
 import ItemsContext from "./context";
-import UnpackedItemsContainer from "./containers/UnpackedItemsContainer";
-import PackedItemsContainer from "./containers/PackedItemsContainer";
 import Filter from "./components/Filter";
 
 function App() {
@@ -35,6 +33,9 @@ function App() {
     setItems([]);
   };
 
+  const unpackedItems = items.filter(item => !item.packed);
+  const packedItems = items.filter(item => item.packed);
+
   return (
     <ItemsContext.Provider
       value={{
@@ -44,24 +45,16 @@ function App() {
     >
       <div className="App">
         <NewItem />
-        <UnpackedItemsContainer>
-          {({ items }) => (
-            <Items title="Unpacked" items={items}>
-              <Filter />
-            </Items>
-          )}
-        </UnpackedItemsContainer>
-        <PackedItemsContainer>
-          {({ items }) => (
-            <Items title="Packed" items={items}>
-              <Filter />
-            </Items>
-          )}
-        </PackedItemsContainer>
-        {items.filter(item => item.packed).length > 0 && (
+        <Items title="Unpacked" items={unpackedItems}>
+          <Filter />
+        </Items>
+        <Items title="Packed" items={packedItems}>
+          <Filter />
+        </Items>
+        {packedItems.length > 0 && (
           <button onClick={onUnpackAll}>Unpack All</button>
         )}
-        {items.filter(item => !item.packed).length > 0 && (
+        {unpackedItems.length > 0 && (
           <button onClick={onPackAll}>Pack All</button>
         )}
         {items.length > 1 && <button onClick={onRemoveAll}>Remove All</button>}
