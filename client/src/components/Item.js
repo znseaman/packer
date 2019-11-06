@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import ItemsContext from "../context";
+import React from "react";
+import useItems from "../hooks/useItems";
 
 const Item = ({ item }) => {
-  const { items, setItems } = useContext(ItemsContext);
+  const { items, setItems } = useItems();
 
   const onCheck = item => {
     let newItems = items.map(i => {

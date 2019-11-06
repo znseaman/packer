@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./App.css";
-import ITEMS from "./data/items";
 import Items from "./components/Items";
 import NewItem from "./components/NewItem";
 
-import ItemsContext from "./context";
 import Filter from "./components/Filter";
+import useItems from "./hooks/useItems";
 
 function App() {
-  const [items, setItems] = useState(ITEMS);
+  const { items, setItems } = useItems();
 
   const onUnpackAll = () => {
     let unpackedItems = items.map(i => {
@@ -37,29 +36,22 @@ function App() {
   const packedItems = items.filter(item => item.packed);
 
   return (
-    <ItemsContext.Provider
-      value={{
-        items,
-        setItems
-      }}
-    >
-      <div className="App">
-        <NewItem />
-        <Items title="Unpacked" items={unpackedItems}>
-          <Filter />
-        </Items>
-        <Items title="Packed" items={packedItems}>
-          <Filter />
-        </Items>
-        {packedItems.length > 0 && (
-          <button onClick={onUnpackAll}>Unpack All</button>
-        )}
-        {unpackedItems.length > 0 && (
-          <button onClick={onPackAll}>Pack All</button>
-        )}
-        {items.length > 1 && <button onClick={onRemoveAll}>Remove All</button>}
-      </div>
-    </ItemsContext.Provider>
+    <div className="App">
+      <NewItem />
+      <Items title="Unpacked" items={unpackedItems}>
+        <Filter />
+      </Items>
+      <Items title="Packed" items={packedItems}>
+        <Filter />
+      </Items>
+      {packedItems.length > 0 && (
+        <button onClick={onUnpackAll}>Unpack All</button>
+      )}
+      {unpackedItems.length > 0 && (
+        <button onClick={onPackAll}>Pack All</button>
+      )}
+      {items.length > 1 && <button onClick={onRemoveAll}>Remove All</button>}
+    </div>
   );
 }
 

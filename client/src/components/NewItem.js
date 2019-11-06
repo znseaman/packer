@@ -1,11 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import uniqueId from "lodash/uniqueId";
-
-import ItemsContext from "../context";
+import useItems from "../hooks/useItems";
 
 const NewItem = () => {
+  const { items, setItems } = useItems();
   const [value, setValue] = useState("");
-  const { items, setItems } = useContext(ItemsContext);
 
   const addNewItem = value => {
     const item = {
