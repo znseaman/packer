@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Item from "./Item";
-import Filter from "./Filter";
 
 const Items = ({ title, items, children }) => {
   const [searchText, setSearchText] = useState("");
